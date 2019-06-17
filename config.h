@@ -5,7 +5,10 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Inconsolata:pixelsize=12:antialias=true:autohint=true";
+static char *font = "monospace:pixelsize=16";
+static char *font2[] = {
+	"Symbola:pixelsize=12:antialias=true:autohint=true",
+};
 static int borderpx = 2;
 
 /*
@@ -57,6 +60,18 @@ static unsigned int blinktimeout = 800;
 static unsigned int cursorthickness = 2;
 
 /*
+ * 1: render most of the lines/blocks characters without using the font for
+ *    perfect alignment between cells (U2500 - U259F except dashes/diagonals).
+ *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
+ * 0: disable (render all U25XX glyphs normally from the font).
+ */
+const int boxdraw = 0;
+const int boxdraw_bold = 0;
+
+/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
+const int boxdraw_braille = 0;
+
+/*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
@@ -86,33 +101,32 @@ unsigned int tabspaces = 8;
 float alpha = 0.8;
 
 /* Terminal colors (16 first used in escape sequence) */
-static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+const char *colorname[] = {
 
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+  /* 8 normal colors */
+  [0] = "#0e0c10", /* black   */
+  [1] = "#c93c0a", /* red     */
+  [2] = "#f2570d", /* green   */
+  [3] = "#0ef26f", /* yellow  */
+  [4] = "#f3a72d", /* blue    */
+  [5] = "#076f97", /* magenta */
+  [6] = "#0b8fd2", /* cyan    */
+  [7] = "#81c3ca", /* white   */
 
-	[255] = 0,
+  /* 8 bright colors */
+  [8]  = "#5a888d",  /* black   */
+  [9]  = "#c93c0a",  /* red     */
+  [10] = "#f2570d", /* green   */
+  [11] = "#0ef26f", /* yellow  */
+  [12] = "#f3a72d", /* blue    */
+  [13] = "#076f97", /* magenta */
+  [14] = "#0b8fd2", /* cyan    */
+  [15] = "#81c3ca", /* white   */
 
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
-	"#555555",
-	"black",
+  /* special colors */
+  [256] = "#cccccc", /* background */
+  [257] = "#555555", /* foreground */
+  [258] = "black",     /* cursor */
 };
 
 
@@ -174,8 +188,8 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
+	{ TERMMOD,              XK_J,           zoom,           {.f = +1} },
+	{ TERMMOD,              XK_K,           zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
