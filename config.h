@@ -35,7 +35,7 @@ static float chscale = 1.0;
  *
  * More advanced example: L" `'\"()[]{}"
  */
-wchar_t *worddelimiters = L" ";
+wchar_t *worddelimiters = L" `'\"()[]{},;:";
 
 /* selection timeouts (in milliseconds) */
 static unsigned int doubleclicktimeout = 300;
@@ -65,11 +65,11 @@ static unsigned int cursorthickness = 2;
  *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
  * 0: disable (render all U25XX glyphs normally from the font).
  */
-const int boxdraw = 0;
+const int boxdraw = 1;
 const int boxdraw_bold = 0;
 
 /* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
-const int boxdraw_braille = 0;
+const int boxdraw_braille = 1;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -104,24 +104,24 @@ float alpha = 0.8;
 const char *colorname[] = {
 
   /* 8 normal colors */
-  [0] = "#0e0c10", /* black   */
-  [1] = "#c93c0a", /* red     */
-  [2] = "#f2570d", /* green   */
-  [3] = "#0ef26f", /* yellow  */
-  [4] = "#f3a72d", /* blue    */
-  [5] = "#076f97", /* magenta */
-  [6] = "#0b8fd2", /* cyan    */
-  [7] = "#81c3ca", /* white   */
+  [0] = "#0d0f1a", /* black   */
+  [1] = "#eaaf48", /* red     */
+  [2] = "#135aad", /* green   */
+  [3] = "#1453ba", /* yellow  */
+  [4] = "#e319a2", /* blue    */
+  [5] = "#27b0e7", /* magenta */
+  [6] = "#42adea", /* cyan    */
+  [7] = "#c6e6ed", /* white   */
 
   /* 8 bright colors */
-  [8]  = "#5a888d",  /* black   */
-  [9]  = "#c93c0a",  /* red     */
-  [10] = "#f2570d", /* green   */
-  [11] = "#0ef26f", /* yellow  */
-  [12] = "#f3a72d", /* blue    */
-  [13] = "#076f97", /* magenta */
-  [14] = "#0b8fd2", /* cyan    */
-  [15] = "#81c3ca", /* white   */
+  [8]  = "#8aa1a5",  /* black   */
+  [9]  = "#eaaf48",  /* red     */
+  [10] = "#135aad", /* green   */
+  [11] = "#1453ba", /* yellow  */
+  [12] = "#e319a2", /* blue    */
+  [13] = "#27b0e7", /* magenta */
+  [14] = "#42adea", /* cyan    */
+  [15] = "#c6e6ed", /* white   */
 
   /* special colors */
   [256] = "#cccccc", /* background */
