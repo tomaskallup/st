@@ -101,32 +101,32 @@ unsigned int tabspaces = 8;
 float alpha = 0.8;
 
 /* Terminal colors (16 first used in escape sequence) */
-const char *colorname[] = {
+static const char *colorname[] = {
+	/* 8 normal colors */
+	"black",
+	"red3",
+	"green3",
+	"yellow3",
+	"blue2",
+	"magenta3",
+	"cyan3",
+	"gray90",
 
-  /* 8 normal colors */
-  [0] = "#0d0f1a", /* black   */
-  [1] = "#eaaf48", /* red     */
-  [2] = "#135aad", /* green   */
-  [3] = "#1453ba", /* yellow  */
-  [4] = "#e319a2", /* blue    */
-  [5] = "#27b0e7", /* magenta */
-  [6] = "#42adea", /* cyan    */
-  [7] = "#c6e6ed", /* white   */
+	/* 8 bright colors */
+	"gray50",
+	"red",
+	"green",
+	"yellow",
+	"#5c5cff",
+	"magenta",
+	"cyan",
+	"white",
 
-  /* 8 bright colors */
-  [8]  = "#8aa1a5",  /* black   */
-  [9]  = "#eaaf48",  /* red     */
-  [10] = "#135aad", /* green   */
-  [11] = "#1453ba", /* yellow  */
-  [12] = "#e319a2", /* blue    */
-  [13] = "#27b0e7", /* magenta */
-  [14] = "#42adea", /* cyan    */
-  [15] = "#c6e6ed", /* white   */
+	[255] = 0,
 
-  /* special colors */
-  [256] = "#cccccc", /* background */
-  [257] = "#555555", /* foreground */
-  [258] = "black",     /* cursor */
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#cccccc",
+	"#555555",
 };
 
 
@@ -205,6 +205,7 @@ ResourcePref resources[] = {
 		{ "borderpx",     INTEGER, &borderpx },
 		{ "cwscale",      FLOAT,   &cwscale },
 		{ "chscale",      FLOAT,   &chscale },
+		{ "alpha",        FLOAT,   &alpha },
 };
 
 /*
