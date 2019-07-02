@@ -120,9 +120,9 @@ static const char *colorname[] = {
 	"#ebdbb2",
 	[255] = 0,
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",   /* 256 -> bg */
+	"#000000",   /* 256 -> bg */
 	"#555555",   /* 257 -> fg */
-	"black", /* 258 -> cursor */
+	"#ffffff", /* 258 -> cursor */
 };
 
 
@@ -130,10 +130,10 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 7;
-unsigned int defaultbg = 258;
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+unsigned int defaultfg = 257;
+unsigned int defaultbg = 256;
+static unsigned int defaultcs = 258;
+static unsigned int defaultrcs = 258;
 
 /*
  * Default shape of cursor
@@ -190,18 +190,15 @@ ResourcePref resources[] = {
 		{ "color13",      STRING,  &colorname[13] },
 		{ "color14",      STRING,  &colorname[14] },
 		{ "color15",      STRING,  &colorname[15] },
+		{ "background",   STRING,  &colorname[256] },
 		{ "foreground",   STRING,  &colorname[257] },
 		{ "cursorColor",  STRING,  &colorname[258] },
 		{ "termname",     STRING,  &termname },
 		{ "xfps",         INTEGER, &xfps },
 		{ "actionfps",    INTEGER, &actionfps },
-		{ "blinktimeout", INTEGER, &blinktimeout },
-		{ "bellvolume",   INTEGER, &bellvolume },
-		{ "tabspaces",    INTEGER, &tabspaces },
 		{ "borderpx",     INTEGER, &borderpx },
 		{ "cwscale",      FLOAT,   &cwscale },
 		{ "chscale",      FLOAT,   &chscale },
-		{ "alpha",        FLOAT,   &alpha },
 };
 
 /*
@@ -219,21 +216,23 @@ static MouseShortcut mshortcuts[] = {
 #define TERMMOD (ControlMask|ShiftMask)
 
 static Shortcut shortcuts[] = {
-	/* mask                 keysym          function        argument */
-	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
-	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
-	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
-	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_J,           zoom,           {.f = +1} },
-	{ TERMMOD,              XK_K,           zoom,           {.f = -1} },
-	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
-	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+	/* mask,        keysym,        function,       argument */
+	{ XK_ANY_MOD,   XK_Break,      sendbreak,      {.i =  0} },
+	{ ControlMask,  XK_Print,      toggleprinter,  {.i =  0} },
+	{ ShiftMask,    XK_Print,      printscreen,    {.i =  0} },
+	{ XK_ANY_MOD,   XK_Print,      printsel,       {.i =  0} },
+	{ TERMMOD,      XK_J,          zoom,           {.f = +1} },
+	{ TERMMOD,      XK_K,          zoom,           {.f = -1} },
+	{ TERMMOD,      XK_Home,       zoomreset,      {.f =  0} },
+	{ TERMMOD,      XK_C,          clipcopy,       {.i =  0} },
+	{ TERMMOD,      XK_V,          clippaste,      {.i =  0} },
+	{ TERMMOD,      XK_Y,          selpaste,       {.i =  0} },
+	{ ShiftMask,    XK_Insert,     selpaste,       {.i =  0} },
+	{ TERMMOD,      XK_Num_Lock,   numlock,        {.i =  0} },
+	{ ShiftMask,    XK_Page_Up,    kscrollup,      {.i = -1} },
+	{ ShiftMask,    XK_Page_Down,  kscrolldown,    {.i = -1} },
+	{ ControlMask,  XK_J,          kscrollup,      {.i = -1} },
+	{ ControlMask,  XK_K,          kscrolldown,    {.i = -1} },
 };
 
 /*
