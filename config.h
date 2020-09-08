@@ -21,6 +21,8 @@ static int borderpx = 2;
  */
 static char *shell = "/bin/sh";
 char *utmp = NULL;
+/* scroll program: to enable use a string like "scroll" */
+char *scroll = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
 /* identification sequence returned in DA and DECID */
@@ -58,6 +60,19 @@ static unsigned int blinktimeout = 800;
  * thickness of underline and bar cursors
  */
 static unsigned int cursorthickness = 2;
+
+/* allow certain non-interactive (insecure) window operations such as:
+   setting the clipboard text */
+int allowwindowops = 0;
+
+/*
+ * draw latency range in ms - from new content/keypress/etc until drawing.
+ * within this range, st draws when content stops arriving (idle). mostly it's
+ * near minlatency, but it waits longer for slow updates to avoid partial draw.
+ * low minlatency will tear/flicker more, as it can "detect" idle too early.
+ */
+static double minlatency = 8;
+static double maxlatency = 33;
 
 /*
  * 1: render most of the lines/blocks characters without using the font for
@@ -230,10 +245,6 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,      XK_Num_Lock,   numlock,          {.i =  0} },
 	{ TERMMOD,      XK_Return,     newterm,          {.i =  0} },
 	{ TERMMOD,      XK_Escape,     keyboard_select,  { 0     } },
-	{ ShiftMask,    XK_Page_Up,    kscrollup,        {.i = -1} },
-	{ ShiftMask,    XK_Page_Down,  kscrolldown,      {.i = -1} },
-	{ ControlMask,  XK_J,          kscrollup,        {.i = -1} },
-	{ ControlMask,  XK_K,          kscrolldown,      {.i = -1} },
 };
 
 /*
